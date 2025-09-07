@@ -37,7 +37,7 @@
       transition: 0.3s;
     }
     button:hover { background: #0056b3; transform: scale(1.05); }
-    #copiedNumber {
+    #copiedNumber, #total, #remaining {
       margin-top: 20px;
       font-size: 18px;
       font-weight: bold;
@@ -61,6 +61,8 @@
   <button onclick="copyNextNumber()">📋 Copy Next Number</button>
 
   <div id="copiedNumber">Copied Number Will Appear Here</div>
+  <div id="total">Total: 0</div>
+  <div id="remaining">Remaining: 0</div>
 
   <footer>🌍 Developed by <b>Umar Mughal</b></footer>
 
@@ -71,6 +73,13 @@
     function prepareNumbers() {
       const text = document.getElementById("input").value;
       numbers = text.split(/\r?\n/).filter(n => n.trim() !== "");
+      index = 0;
+      updateCounts();
+    }
+
+    function updateCounts() {
+      document.getElementById("total").innerText = "Total: " + numbers.length;
+      document.getElementById("remaining").innerText = "Remaining: " + (numbers.length - index);
     }
 
     function copyNextNumber() {
@@ -89,6 +98,7 @@
       navigator.clipboard.writeText(number).then(() => {
         document.getElementById("copiedNumber").innerText = `Copied: ${number}`;
         index++;
+        updateCounts();
       });
     }
   </script>
